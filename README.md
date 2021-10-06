@@ -30,3 +30,7 @@ If you prefer [install Gradle](http://www.gradle.org/installation) or use a [Gra
 ```bash
 ./gradlew clean test
 ```
+
+## Recomendations
+
+We use [Intellij](https://www.jetbrains.com/es-es/idea/download/#section=windows) IDE for executions & testing
