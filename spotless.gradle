@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath("com.diffplug.spotless:spotless-plugin-gradle:3.26.1")
+    }
+}
+
+apply plugin: com.diffplug.gradle.spotless.SpotlessPlugin
+
+def configDir = "https://gradle.avaldigitallabs.com/resources/static-code-analysis/tools"
+
+spotless {
+    java {
+        googleJavaFormat()
+        removeUnusedImports()
+        target project.fileTree(project.rootDir) {
+            include '**/*.java'
+            exclude 'build/*', '**/build/*'
+        }
+    }
+
+    format 'misc', {
+        target project.fileTree(project.rootDir) {
+            include '**/.gitignore', '**/*.gradle', '***.md', '**/*.sh'
+            exclude '.github/*'
+        }
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    encoding 'UTF-8'
+}

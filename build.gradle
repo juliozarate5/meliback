@@ -1,0 +1,65 @@
+plugins {
+    id 'org.springframework.boot' version "$springframeworkVersion"
+    id 'io.spring.dependency-management' version "$springDependencyVersion"
+    id 'java'
+}
+
+apply from: "spotless.gradle"
+
+group = "${group}"
+version = "${version}"
+sourceCompatibility = "${javaVersion}"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "junit:junit:${junitVersion}"
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct', version: "$mapstructVersion"
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: "$mapstructVersion"
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: "$mapstructVersion"
+    implementation group: 'org.mapstruct', name: 'mapstruct-processor', version: "$mapstructVersion"
+
+    implementation group: 'org.springframework', name: 'spring-context', version: "$springContextVersion"
+
+    implementation group: 'io.vavr', name: 'vavr', version: "$vavrVersion"
+
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: "$javax"
+
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: "$springDataJpa"
+
+    //testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "${junitVersion}")
+    //testRuntimeOnly(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "${junitVersion}")
+    testImplementation(group: 'org.junit-pioneer', name: 'junit-pioneer', version: "${junitPioneerVersion}")
+    testImplementation(group: 'org.mockito', name: 'mockito-junit-jupiter', version: "${mockitoVersion}")
+    testImplementation(group: 'org.jacoco', name: 'org.jacoco.core', version: "${jacocoVersion}")
+    testImplementation(group: 'com.tngtech.archunit', name: 'archunit', version: "${archunitVersion}")
+
+    testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: '3.2.0'
+
+}
+test {
+    useJUnitPlatform()
+}
+configurations {
+    compile.exclude module: 'spring-boot-starter-tomcat'
+    compile.exclude group: 'org.apache.tomcat'
+    mapstruct
+}
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.session:spring-session-bom:2020.0.3'
+    }
+}
