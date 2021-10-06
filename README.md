@@ -22,7 +22,7 @@ If you prefer [install Gradle](http://www.gradle.org/installation) or use a [Gra
 
 ```bash
 ./gradlew clean build
-./w spotlessApply clean build
+./gradlew spotlessApply clean build
 ```
 
 ## Run tests
